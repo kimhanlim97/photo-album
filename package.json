@@ -1,0 +1,14 @@
+{
+  "name": "photo-album",
+  "version": "1.0.0",
+  "description": "사진 업로드와 보기, 삭제 기능을 가진 앨범 프로젝트",
+  "main": "album.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kimhanlim",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
