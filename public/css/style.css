@@ -71,15 +71,14 @@ body {
     border: 2px dashed #92b0b3 ;
     border-radius: 5px;
     text-align: center;
-    cursor: pointer;
     transition: all .15s ease-in-out;
 }
 
-.upload__logo-container {
+.upload__icon-container {
     height: 50%;
 }
 
-.upload__logo {
+.upload__icon {
     margin-top: 35%;
     width: 10%;
 }
@@ -91,32 +90,103 @@ body {
 }
 
 .upload__info--thin {
+    display: block;
     margin-top: 10px;
     color: grey;
     font-weight: lighter;
+    cursor: pointer;
 }
 
 .upload__image-input--hidden {
     display: none;
 }
 
-.upload__submit {
+.upload__btn-container {
     position: absolute;
     bottom: 1%;
     right: 1%;
     z-index: 30;
+}
 
+.btn {
+    width: 80px;
+    height: 40px;
+    padding: 0 20px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* error modal */
+.error {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    border-radius: 5px;
+    background-color: red;
+}
+
+.error__icon-container {
+    height: 40%;
+    text-align: center;
+}
+
+.error__icon {
+    margin-top: 15px;
+    height: 90%;
+}
+
+.error__btn-container {
+    position: absolute;
+    bottom: 2%;
+    right: 50%;
+    transform: translate(50%, 0);
+    z-index: 30;
+}
+
+.error__text {
+    color: white;
+    text-align: center;
+}
+
+.error__intro {
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+.error__message {
+    margin-top: 10px;
+}
+
+.btn--error {
+    color: white;
+    border-color: white;
 }
 
 
 /* media query */
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 368px) {
     :root {
         font-size: 0.75em;
     }
     .upload__image-box {
         width: 300px;
         height: 300px;
+    }
+    .img {
+        max-width: 300px;
+        max-height: 300px;
     }
 }
 
@@ -129,6 +199,10 @@ body {
         height: 500px;
         transform: translate(-50%, 20%)
     }
+    .img {
+        max-width: 500px;
+        max-height: 500px;
+    }
 }
 
 @media only screen and (min-width: 1024px) {
@@ -139,5 +213,9 @@ body {
         width: 700px;
         height: 700px;
         transform: translate(-50%, 5%)
+    }
+    .img {
+        max-width: 700px;
+        max-height: 700px;
     }
 }
