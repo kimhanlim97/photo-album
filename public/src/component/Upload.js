@@ -28,7 +28,12 @@ export default class Upload extends Component {
                         <input class="upload__image-input--hidden" type="file" accept="image/*" id="click-upload-input"/>`: ''
                     }
                     ${isLoad === 1 ? `
-                        <p>준비중입니다</p>`: ''
+                        <div class="loading">
+                            <div class="loading__circle">
+                                <div class="loading__empty"></div>
+                            </div>
+                            <p class="loading__text">Loading...</p>
+                        </div>`: ''
                     }
                     ${isLoad === 2 ? `
                         <img class="img" src="${img.src}">
