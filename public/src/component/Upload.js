@@ -76,51 +76,42 @@ export default class Upload extends Component {
             this.setState({ error: { isError: true, intro: '파일 업로드 에러가 발생했습니다', message: '다시 한번 시도해주세요' } })
         })
 
-        this.$target.addEventListener('click', ({ target }) => {
-            if (target.id === 'click-upload-link') {
-                // 상태에 종속되게 실행할 수 있는지 (DOM을 직접 조작하지 않을 방법) 고민해보기
-                this.$target.querySelector('#click-upload-input').click()
-            }
-            if (target.id === 'delete-btn') {
-                const EMPTY = 0
-                this.setState({ isLoad: EMPTY })
-            }
-
-            if (target.id === 'error-btn') {
-                this.setState({ error: { isError: false } })
-            }
+        this.addEvent('click', '#click-upload-link', ({ target }) => {
+            // 상태에 종속되게 실행할 수 있는지 (DOM을 직접 조작하지 않을 방법) 고민해보기
+            this.$target.querySelector('#click-upload-input').click()
         })
 
-        this.$target.addEventListener('change', ({ target }) => {
-            if (target.id === 'click-upload-input') {
-                if (!target.files[0].type.startsWith('image/')) return null
-                const imgFile = target.files[0]
-                fileReader.readAsDataURL(imgFile) // FileReader로 상태 관리 위임
-            }
+        this.addEvent('click', '#delete-btn', ({ target }) => {
+            const EMPTY = 0
+            this.setState({ isLoad: EMPTY })
         })
 
-        this.$target.addEventListener('dragenter', e => {
-            if (e.target.matches('#img-box, #img-box *')) {
-                e.preventDefault()
-            }
+        this.addEvent('click', '#error-btn', ({ target }) => {
+            this.setState({ error: { isError: false } })
         })
 
-        this.$target.addEventListener('dragover', e => {
-            if (e.target.matches('#img-box, #img-box *')) {
-                e.preventDefault()
-                e.dataTransfer.dropEffect = 'copy'
-            }
+        this.addEvent('change', '#click-upload-input', ({ target }) => {
+            if (!target.files[0].type.startsWith('image/')) return null
+            const imgFile = target.files[0]
+            fileReader.readAsDataURL(imgFile) // FileReader로 상태 관리 위임
         })
 
-        this.$target.addEventListener('drop', e => {
-            if (e.target.matches('#img-box, #img-box *')) {
-                e.preventDefault()
-                const imgFile = e.dataTransfer.files
-                console.log('img:', imgFile)
-                if (!imgFile[0].type.startsWith('image/')) return null
+        this.addEvent('dragenter', '#img-box, #img-box *', e => {
+            e.preventDefault()
+        })
 
-                fileReader.readAsDataURL(imgFile[0]) // FileReader로 상태 관리 위임
-            }
+        this.addEvent('dragover', '#img-box, #img-box *', e => {
+            e.preventDefault()
+            e.dataTransfer.dropEffect = 'copy'
+        })
+
+        this.addEvent('drop', '#img-box, #img-box *', e => {
+            e.preventDefault()
+            const imgFile = e.dataTransfer.files
+            console.log('img:', imgFile)
+            if (!imgFile[0].type.startsWith('image/')) return null
+
+            fileReader.readAsDataURL(imgFile[0]) // FileReader로 상태 관리 위임
         })
     }
 }

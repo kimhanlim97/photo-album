@@ -19,4 +19,11 @@ export default class Component {
         this.$state = { ...this.$state, ...newState  }
         this.render()
     }
+    addEvent(eventType, cssSelector, callback) {
+        this.$target.addEventListener(eventType, event => {
+            if (event.target.matches(cssSelector)) {
+                callback(event)
+            }
+        })
+    }
 }
