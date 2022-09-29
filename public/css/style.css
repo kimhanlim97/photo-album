@@ -58,20 +58,15 @@ body {
     line-height: 50px;
 }
 
-/* upload layout & styling */
+/* upload component */
 .upload {
     position: relative;
-}
-
-.upload__image-box {
-    position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, 50%);
     border: 2px dashed #92b0b3 ;
     border-radius: 5px;
     text-align: center;
-    transition: all .15s ease-in-out;
 }
 
 .upload__icon-container {
@@ -125,7 +120,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* loading */
+/* Loading component */
 .loading {
     display: flex;
     justify-content: center;
@@ -221,7 +216,7 @@ body {
     :root {
         font-size: 0.75em;
     }
-    .upload__image-box {
+    .img-upload-box {
         width: 300px;
         height: 300px;
     }
@@ -235,10 +230,10 @@ body {
     :root {
         font-size: 1em;
     }
-    .upload__image-box {
+    .upload {
         width: 500px;
         height: 500px;
-        transform: translate(-50%, 20%)
+        /* transform: translate(-50%, 20%) */
     }
     .img {
         max-width: 500px;
@@ -250,12 +245,12 @@ body {
     :root {
         font-size: 1.2em;
     }
-    .upload__image-box {
+    .upload {
         width: 700px;
         height: 700px;
-        transform: translate(-50%, 5%)
+        /* transform: translate(-50%, 5%) */
     }
-    .img {
+    .upload {
         max-width: 700px;
         max-height: 700px;
     }
