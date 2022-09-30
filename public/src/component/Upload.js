@@ -1,78 +1,77 @@
 import Component from '../core/Component.js'
 import Error from './Error.js'
-import ImgUploadBox from './ImgUploadBox.js'
+import ImgUploadBox from './UploadBox.js'
 import Loading from './Loading.js'
 import ImgBox from './ImgBox.js'
 
 export default class Upload extends Component {
     setup() {
         this.$state = {
-            isLoad: 0,
             error: {
                 isError: false,
                 intro: '',
                 message: ''
             },
             img: {
-
+                isLoad: 0,
+                src: '',
             }
         }
     }
     template() {
         return `
             <div class="upload">
-                <div data-component="img-upload-box"></div>
-                <div data-component="loading"></div>
-                <div data-component="img-box"></div>
-                <div data-component="error"></div>
+                <div class="upload-uploadBox" data-component="img-box"></div>
             </div>
         `
     }
     mounted() {
         const { closeError, clickEvent, dragEnterEvent, dragOverEvent, dropUpload, clickUpload, dropImg } = this
-        const { isLoad, error, img } = this.$state
-        const $error = document.querySelector('[data-component="error"]')
-        const $imgUploadBox = document.querySelector('[data-component="img-upload-box"]')
-        const $loading = document.querySelector('[data-component="loading"]')
+        const { error, img } = this.$state
         const $imgBox = document.querySelector('[data-component="img-box"]')
+        // 제어문 대신 컴포넌트를 마운트할 방법 구상해보기
+        if (img.isLoad === 0) {
+            new ImgUploadBox($imgBox, {
+                clickEvent: clickEvent.bind(this),
+                dragEnterEvent: dragEnterEvent.bind(this),
+                dragOverEvent: dragOverEvent.bind(this),
+                dropUpload: dropUpload.bind(this),
+                clickUpload: clickUpload.bind(this)
+            })
+        }
+        else if (img.isLoad === 1) {
+            new Loading($imgBox, {
+                isLoad: img.isLoad,
+            })
+        }
+        else if (img.isLoad === 2) {
+            new ImgBox($imgBox, {
+                img,
+                dropImg: dropImg.bind(this)
+            })
+        }
 
-        new Error($error, {
-            error,
-            closeError: closeError.bind(this),
-        })
-
-        new Loading($loading, {
-            isLoad
-        })
-
-        new ImgUploadBox($imgUploadBox, {
-            isLoad,
-            clickEvent: clickEvent.bind(this),
-            dragEnterEvent: dragEnterEvent.bind(this),
-            dragOverEvent: dragOverEvent.bind(this),
-            dropUpload: dropUpload.bind(this),
-            clickUpload: clickUpload.bind(this)
-        })
-
-        new ImgBox($imgBox, {
-            isLoad,
-            img,
-            dropImg: dropImg.bind(this)
-        })
+        if (error.isError) {
+            new Error($imgBox, {
+                error,
+                closeError: closeError.bind(this),
+            })
+        }
     }
 
+    // getter 함수 대신 FileReader를 공유할 방법 고민해보기
     get fileReader() {
         const fileReader = new FileReader()
         
         fileReader.addEventListener('progress', e => {
             const LOADING = 1
-            this.setState({ isLoad: LOADING })
+            this.setState({ img: { isLoad: LOADING, src: '' } })
         })
 
         fileReader.addEventListener('load', e => {
             const src = e.target.result
             const DONE = 2
-            this.setState({ isLoad: DONE, img: { src: src } })
+            this.setState({ img: { isLoad: DONE, src: src } })
         })
 
         fileReader.addEventListener('error', e => {
@@ -88,7 +87,7 @@ export default class Upload extends Component {
 
     clickEvent() {
         // 상태에 종속되게 실행할 수 있는지 (DOM을 직접 조작하지 않을 방법) 고민해보기
-        this.$target.querySelector('#click-upload-input').click()
+        this.$target.querySelector('.uploadBox-fileInput').click()
     }
 
     dragEnterEvent(e) {
@@ -102,7 +101,6 @@ export default class Upload extends Component {
     }
 
     dropUpload(e) {
-        console.log('drop')
         const fileReader = this.fileReader
         e.preventDefault()
         const imgFile = e.dataTransfer.files
@@ -112,7 +110,6 @@ export default class Upload extends Component {
     }
 
     clickUpload(e) {
-        console.log('click')
         const fileReader = this.fileReader
         if (!e.target.files[0].type.startsWith('image/')) return null
         const imgFile = e.target.files[0]
@@ -121,6 +118,6 @@ export default class Upload extends Component {
 
     dropImg() {
         const EMPTY = 0
-        this.setState({ isLoad: EMPTY })
+        this.setState({ img: { isLoad: EMPTY, src: '' } })
     }
 }

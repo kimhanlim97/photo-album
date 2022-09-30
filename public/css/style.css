@@ -8,11 +8,11 @@ body {
     height: 100vh;
     padding: 20px;
 }
-/* grid layout */
+/* container layout */
 .container {
     height: 100%;
     display: grid;
-    grid-template-rows: 50px 50px 1fr;
+    grid-template-rows: 50px 50px 700px;
     grid-template-areas: 
         "header header header"
         " nav    nav    nav  "
@@ -58,50 +58,78 @@ body {
     line-height: 50px;
 }
 
-/* upload component */
+/* main - upload layout */
 .upload {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, 50%);
+    margin: auto;
     border: 2px dashed #92b0b3 ;
     border-radius: 5px;
     text-align: center;
 }
 
-.upload__icon-container {
-    height: 50%;
+.upload-uploadBoxContainer {
+    width: 100%;
+    height: 100%;
 }
 
-.upload__icon {
-    margin-top: 35%;
-    width: 10%;
-}
-
-.upload__info {
-    margin-top: 10%;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.upload__info--thin {
-    display: block;
-    margin-top: 10px;
-    color: grey;
-    font-weight: lighter;
-    cursor: pointer;
-}
-
-.upload__image-input--hidden {
-    display: none;
-}
-
-.upload__btn-container {
+.upload-btnContainer {
     position: absolute;
     bottom: 1%;
     right: 1%;
     z-index: 30;
+    height: 300px;
+    background-color: red;
 }
+
+/* uploadBox component */
+.uploadBox {
+    width: 100%;
+    height: 100%;
+}
+
+.uploadBox-iconContainer {
+    height: 50%;
+}
+
+.uploadBox-icon {
+    margin-top: 35%;
+    width: 10%;
+}
+
+.uploadBox-infoDrop {
+    display: block;
+    padding-top: 10%;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.uploadBox-infoClick {
+    display: block;
+    margin-top: 0.7rem;
+    color: grey;
+    font-size: 1rem;
+    font-weight: lighter;
+    cursor: pointer;
+}
+
+.uploadBox-fileInput {
+    display: none;
+}
+
+/* imgBox component */
+.imgBox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.imgBox-img {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* dropImg component */
 
 .btn {
     width: 80px;
@@ -111,13 +139,6 @@ body {
     border-radius: 5px;
     background-color: transparent;
     cursor: pointer;
-}
-
-.img {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 /* Loading component */
@@ -216,9 +237,10 @@ body {
     :root {
         font-size: 0.75em;
     }
-    .img-upload-box {
+    .upload {
         width: 300px;
         height: 300px;
+        transform: translate(0, 50%)
     }
     .img {
         max-width: 300px;
@@ -233,7 +255,7 @@ body {
     .upload {
         width: 500px;
         height: 500px;
-        /* transform: translate(-50%, 20%) */
+        transform: translate(0, 20%)
     }
     .img {
         max-width: 500px;
@@ -248,7 +270,7 @@ body {
     .upload {
         width: 700px;
         height: 700px;
-        /* transform: translate(-50%, 5%) */
+        transform: translate(0, 15%)
     }
     .upload {
         max-width: 700px;
